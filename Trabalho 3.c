@@ -7,7 +7,7 @@ typedef struct{
 
 confereponto(Triangulo ponto1,Triangulo ponto2,Triangulo ponto3){
 	int valor;
-	valor = (ponto1.x*(ponto2.y-ponto3.y) + ponto2.x*(ponto3.y-ponto1.y)+ ponto3.x*(ponto1.y-ponto2.y));
+	valor = abs(ponto1.x*(ponto2.y-ponto3.y) + ponto2.x*(ponto3.y-ponto1.y)+ ponto3.x*(ponto1.y-ponto2.y));
 	return(valor);
 }
 
