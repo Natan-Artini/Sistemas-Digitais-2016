@@ -1,48 +1,49 @@
-module calculo(
-	input [9:0]p1x,
-	input [9:0]p1y,
-	input [9:0]p2x,
-	input [9:0]p2y,
-	input [9:0]p3x,
-	input [9:0]p3y,
-	output saida
-);
-	wire signed resultado;
-	
-	always @(p1x,p1y,p2x,p2y,p3x,p3y) begin
-		resultado = p1x*(p2y-p3y) + p2x*(p3y-p1y) + p3x*(p1y-p2y);
-	end
-	
-	assign saida = resultado;
-	
-endmodule
+module Area(
+	input CLOCK_50,
+	input [10:0]ax,
+	input [10:0]ay,
+	input [10:0]bx,
+	input [10:0]by,
+	input [10:0]cx,
+	input [10:0]cy,
+	output [23:0]area);
 
-module principal(
-	input [9:0]ptx,
-	input [9:0]pty,
-	input [9:0]p1x,
-	input [9:0]p1y,
-	input [9:0]p2x,
-	input [9:0]p2y,
-	input [9:0]p3x,
-	input [9:0]p3y,
-	output saida
-);
-	
-	reg [23:0]valor;
-	reg [23:0]valor1;
-	reg [23:0]valor2;
-	reg [23:0]valor3;
-	
-	calculo a(p1x,p1y,p2x,p2y,p3x,p3y,valor);
-	calculo b(ptx,pty,p2x,p2y,p3x,p3y,valor1);
-	calculo c(p1x,p1y,ptx,pty,p3x,p3y,valor2);
-	calculo d(p1x,p1y,p2x,p2y,ptx,pty,valor3);
-	
-	if(valor == (valor1+valor2+valor3)) begin
-		saida <= 1;
-	end else begin
-		saida <= 0;
+	reg signed [23:0]valor;
+
+	always @(posedge CLOCK_50) begin
+		valor = (ax*(by-cy) + bx*(cy-ay)+ cx*(ay-by));
 	end
-	
+
+	assign area = valor;
+endmodule
+  
+module main(input CLOCK_50);
+
+	reg resultado;
+	wire [10:0]ax;
+	wire [10:0]ay;
+	wire [10:0]bx;
+	wire [10:0]by;
+	wire [10:0]cx;
+	wire [10:0]cy;
+	wire [10:0]dx;
+	wire [10:0]dy;
+	wire [23:0]valorA;
+	wire [23:0]valorB;
+	wire [23:0]valorC;
+	wire [23:0]valorD;
+
+	Area A(CLOCK_50,ax,ay,bx,by,cx,cy,valorA);
+	Area B(CLOCK_50,dx,dy,bx,by,cx,cy,valorB);
+	Area C(CLOCK_50,ax,ay,dx,dy,cx,cy,valorC);
+	Area D(CLOCK_50,ax,ay,bx,by,dx,dy,valorD);
+   
+	always @(posedge CLOCK_50)begin
+		if(valorA == (valorB+valorC+valorD))begin
+			resultado = 1;
+		end else begin
+			resultado = 0;
+		end	  
+	end
+   
 endmodule
