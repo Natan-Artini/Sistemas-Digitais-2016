@@ -11,7 +11,7 @@ int main(){
 	for(a=0;a<200;a++){
 		fscanf(LeituraC,"%i",&entradac);
 		fscanf(LeituraC,"%i",&entradav);
-		if(entradac != entradav){
+		if(entradac == entradav){
 			fprintf(Resultado,"%i\n",a);
 		}
 	}
