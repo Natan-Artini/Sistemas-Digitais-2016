@@ -8,20 +8,11 @@ module calculo(
   output saida
 );
 
-  wire signed [11:0] t1;
-  wire signed [11:0] t2;
-  wire signed [11:0] t3;
-  wire signed [11:0] t4;
   wire signed [23:0] m1;
   wire signed [23:0] m2;
 
-  assign t1 = p1x - p3x;
-  assign t2 = p2y - p3y;
-  assign t3 = p2x - p3x;
-  assign t4 = p1y - p3y;
-
-  assign m1 = t1 * t2;
-  assign m2 = t3 * t4;
+  assign m1 = (p1x - p3x) * (p2y - p3y);
+  assign m2 = (p2x - p3x) * (p1y - p3y);
   
   assign saida = m1 < m2;
 
