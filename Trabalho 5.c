@@ -10,8 +10,8 @@ int main(){
 	Resultado = fopen("Comparacao.txt","a");
 	for(a=0;a<200;a++){
 		fscanf(LeituraC,"%i",&entradac);
-		fscanf(LeituraC,"%i",&entradav);
-		if(entradac == entradav){
+		fscanf(LeituraV,"%i",&entradav);
+		if(entradac != entradav){
 			fprintf(Resultado,"%i\n",a);
 		}
 	}
